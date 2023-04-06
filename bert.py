@@ -6,27 +6,12 @@ tokenizer = AutoTokenizer.from_pretrained('nlptown/bert-base-multilingual-uncase
 model = AutoModelForSequenceClassification.from_pretrained('nlptown/bert-base-multilingual-uncased-sentiment')
 
 
-tokens = tokenizer.encode('This is amazing, I loved it. Great!', return_tensors='pt')
-result = model(tokens)
-print(int(torch.argmax(result.logits))+1)
+def my_bert(sentence):
+    tokens = tokenizer.encode(sentence, return_tensors='pt')
+    result = model(tokens)
+    level = int(torch.argmax(result.logits))+1
+    # print(int(torch.argmax(result.logits))+1)
+    return level
 
-# 5
-
-tokens = tokenizer.encode('It was good but could been better.', return_tensors='pt')
-result = model(tokens)
-print(int(torch.argmax(result.logits))+1)
-
-# 3
-
-tokens = tokenizer.encode('徐静真好看！', return_tensors='pt')
-result = model(tokens)
-print(int(torch.argmax(result.logits))+1)
-
-#5
-
-tokens = tokenizer.encode('今天真糟糕!!!!!', return_tensors='pt')
-result = model(tokens)
-print(int(torch.argmax(result.logits))+1)
-
-#1
-
+# sentence = input("输入点东西:\n")
+# my_bert(sentence)
